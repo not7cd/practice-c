@@ -70,12 +70,12 @@ MU_TEST(test_vector_push_a_lot) {
     vector* v;
     v =  vector_create();
 
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 1000; ++i)
     {
         vector_push(v, i);
     }
 
-    mu_check(v->size == 100);
+    mu_check(v->size == 1000);
     mu_check(v->size <= v->capacity);
     mu_check(v->data[50] == 50);
 }
@@ -127,7 +127,7 @@ MU_TEST(test_vector_delete) {
 
 MU_TEST(test_vector_remove) {
     vector* v;
-    v =  vector_create();
+    v =  mock_vector_3();
 
     vector_remove(v, 98);
 
@@ -138,7 +138,7 @@ MU_TEST(test_vector_remove) {
 
 MU_TEST(test_vector_find) {
     vector* v;
-    v =  vector_create();
+    v =  mock_vector_3();
 
     mu_check(vector_find(v, 97) == 0);
     mu_check(vector_find(v, 98) == 1);
