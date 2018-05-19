@@ -20,7 +20,7 @@ int index_in_bounds(vector* v, int i) {
 void vector_resize (vector* v, int new_cap) {
     int* new_data = (int*) malloc(sizeof(int) * new_cap);
     for (int i = 0; i < v->size; ++i) {
-        new_data[i] = v->data[i];
+        *(new_data+i) = *(v->data+i);
     }
     free(v->data);
     v->data = new_data;
@@ -49,7 +49,7 @@ int vector_at(vector* v, int i) {
 
 // push at the end
 void vector_push(vector* v, int val) {
-    v->data[v->size] = val;
+    *(v->data+v->size) = val;
     v->size++;
     if (v->size == v->capacity) {
         vector_resize(v, v->capacity * 2);
@@ -61,9 +61,9 @@ void vector_push(vector* v, int val) {
 void vector_insert(vector* v, int i, int val) {
 
     for (int j = v->size; j > i; --j) {
-        v->data[j] = v->data[j-1];
+        *(v->data+j) = *(v->data+j-1);
     }
-    v->data[i] = val;
+    *(v->data+i) = val;
     v->size++;
 
     if (v->size == v->capacity) {
@@ -81,14 +81,14 @@ void vector_prepend(vector* v, int val) {
 // delete last element and return it's value
 int vector_pop(vector* v) {
     v->size--;
-    int val = v->data[v->size];
+    int val = *(v->data+v->size);
     return val;
 }
 
 // delete element at index
 void vector_delete(vector* v, int i) {
     for (int j = i; j < v->size; ++j) {
-        v->data[j] = v->data[j+1];
+        *(v->data+j) = *(v->data+j+1);
     }
     v->size--;
     return;
@@ -104,7 +104,7 @@ void vector_remove(vector* v, int val) {
 // return index of first element with value
 int vector_find(vector* v, int val) {
     for (int i = 0; i < v->size; i++) {
-        if (val == v->data[i]) {
+        if (val == *(v->data+i)) {
             return i;
         }
     }
